@@ -1,0 +1,13 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:mysql://root:gYuMCAyeToCxfNZMhqJbFtFDbRvPNXJm@interchange.proxy.rlwy.net:21793/railway
+    username: root
+    password: gYuMCAyeToCxfNZMhqJbFtFDbRvPNXJm
+#  logging:
+#    level:
+#      org:
+#        springframework:
+#          security: DEBUG
