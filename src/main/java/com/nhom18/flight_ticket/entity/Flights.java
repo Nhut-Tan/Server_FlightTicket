@@ -6,7 +6,6 @@ import com.nhom18.flight_ticket.core.FlightStatus;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -15,7 +14,8 @@ public class Flights {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int flight_id;
-
+    @Column(name = "flight_number", unique = true)
+    private int flight_number;
     private Timestamp departure_time;
 
     private Timestamp arrival_time;
@@ -33,17 +33,17 @@ public class Flights {
     private List<Tickets> listTickets;
 
     @ManyToOne
-    @JoinColumn(name = "airline_id", insertable = false, updatable = false)
+    @JoinColumn(name = "airline_id")
     @JsonBackReference
     private Airlines airline;
 
     @ManyToOne
-    @JoinColumn(name = "origin_airport", insertable = false, updatable = false)
+    @JoinColumn(name = "origin_airport")
     @JsonBackReference
     private Airports origin_airport;
 
     @ManyToOne
-    @JoinColumn(name = "des_airport", insertable = false, updatable = false)
+    @JoinColumn(name = "des_airport")
     @JsonBackReference
     private Airports des_airport;
 
@@ -133,5 +133,13 @@ public class Flights {
 
     public void setDes_airport(Airports des_airport) {
         this.des_airport = des_airport;
+    }
+
+    public int getFlight_number() {
+        return flight_number;
+    }
+
+    public void setFlight_number(int flight_number) {
+        this.flight_number = flight_number;
     }
 }

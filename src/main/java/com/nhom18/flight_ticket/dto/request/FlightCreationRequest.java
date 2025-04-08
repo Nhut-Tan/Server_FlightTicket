@@ -1,5 +1,6 @@
 package com.nhom18.flight_ticket.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nhom18.flight_ticket.core.FlightStatus;
 
 import java.math.BigDecimal;
@@ -10,7 +11,9 @@ public class FlightCreationRequest {
     private int flight_number;
     private int origin_airport;
     private int des_airport;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp departure_time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp arrival_time;
     private int total_seats;
     private int available_seats;

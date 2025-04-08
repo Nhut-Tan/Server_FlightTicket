@@ -29,6 +29,7 @@ public class FlightService {
     private AirlineRepository airlineRepository;
     @Autowired
     private AirportRepository airportRepository;
+
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private static final String SERPAPI_KEY = "0af9d871d47dd3c85ab8a5f44b4bd1f539ca1180962168a5150eef13465fa050";
@@ -111,6 +112,7 @@ public class FlightService {
         Airports desAirport = airportRepository.findById(request.getOrigin_airport())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Des Airport Id"));
         flight.setAirline(airline);
+        flight.setFlight_number(request.getFlight_number());
         flight.setOrigin_airport(originAirport);
         flight.setDes_airport(desAirport);
         flight.setArrival_time(request.getArrival_time());

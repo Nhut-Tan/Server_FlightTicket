@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:8081")
+@RequestMapping("/api")
 public class TicketController {
     @Autowired
     private TicketService ticketService;
