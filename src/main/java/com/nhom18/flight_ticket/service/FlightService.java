@@ -85,7 +85,8 @@ public class FlightService {
                     JsonNode arrivalNode = flight.path("arrival_airport");
                     flightResponse.setArrivalAirportId(arrivalNode.path("id").asText());
                     flightResponse.setArrivalTime(arrivalNode.path("time").asText());
-
+                    // Số hiệu chuyến bay
+                    flightResponse.setFlight_number(flight.path("flight_number").asText());
                     // Thời gian bay
                     flightResponse.setDuration(flight.path("duration").asInt());
                     // Hạng ghế

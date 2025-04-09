@@ -9,6 +9,7 @@ public class FlightSearchResponse {
     private String airlineLogo;
     private String travelClass;
     private Double price;
+    private String flight_number;
 
     public String getDepartureAirportId() {
         return departureAirportId;
@@ -72,5 +73,13 @@ public class FlightSearchResponse {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getFlight_number() {
+        return flight_number;
+    }
+
+    public void setFlight_number(String flight_number) {
+        this.flight_number = flight_number;
     }
 }
