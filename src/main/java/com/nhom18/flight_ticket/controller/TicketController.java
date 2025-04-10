@@ -11,22 +11,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/api")
 public class TicketController {
     @Autowired
     private TicketService ticketService;
 
     @PostMapping("/user/booking")
-    public ApiResponse<Tickets> createTicket(@RequestBody TicketCreationRequest request){
+    public ApiResponse<Tickets> createTicket(@RequestBody TicketCreationRequest request) {
         ApiResponse<Tickets> apiResponse = new ApiResponse<>();
         try {
             Tickets ticket = ticketService.createTicket(request);
-            if(ticket != null){
+            if (ticket != null) {
                 apiResponse.setCode(200);
                 apiResponse.setResult(ticket);
                 apiResponse.setMessage("Ticket booked successfully");
-            } else{
+            } else {
                 apiResponse.setCode(200);
                 apiResponse.setMessage("The plane is full");
             }
@@ -38,11 +37,11 @@ public class TicketController {
     }
 
     @GetMapping("/admin/bookings")
-    public ApiResponse<List<Tickets>> getAllTickets(){
+    public ApiResponse<List<Tickets>> getAllTickets() {
         ApiResponse<List<Tickets>> apiResponse = new ApiResponse<>();
-        try{
+        try {
             List<Tickets> list = ticketService.getAllTickets();
-            if(list != null){
+            if (list != null) {
                 apiResponse.setResult(list);
                 apiResponse.setCode(200);
                 apiResponse.setMessage("Get Success");
@@ -58,11 +57,11 @@ public class TicketController {
     }
 
     @GetMapping("/admin/bookings/{booking_id}")
-    public ApiResponse<Tickets> getById(@PathVariable("booking_id") int id){
+    public ApiResponse<Tickets> getById(@PathVariable("booking_id") int id) {
         ApiResponse<Tickets> apiResponse = new ApiResponse<>();
-        try{
+        try {
             Tickets ticket = ticketService.getById(id);
-            if(ticket != null){
+            if (ticket != null) {
                 apiResponse.setResult(ticket);
                 apiResponse.setCode(200);
                 apiResponse.setMessage("Get Success");
@@ -78,12 +77,13 @@ public class TicketController {
     }
 
     @PutMapping("admin/bookings/{booking_id}/status")
-    public ApiResponse<Tickets> updateStatusTicket(@PathVariable("booking_id") int id, @RequestBody TicketUpdateRequest request){
+    public ApiResponse<Tickets> updateStatusTicket(@PathVariable("booking_id") int id,
+            @RequestBody TicketUpdateRequest request) {
         ApiResponse<Tickets> apiResponse = new ApiResponse<>();
-        try{
+        try {
             Tickets updateTicket = ticketService.getById(id);
-            if(updateTicket != null){
-                updateTicket = ticketService.updateStatusTicket(id,request);
+            if (updateTicket != null) {
+                updateTicket = ticketService.updateStatusTicket(id, request);
                 apiResponse.setResult(updateTicket);
                 apiResponse.setCode(200);
                 apiResponse.setMessage("Status update successfully");
@@ -99,7 +99,7 @@ public class TicketController {
     }
 
     @PutMapping("user/cancel/{id}")
-    public ApiResponse<String> cancelTicket(@PathVariable("id") int id){
+    public ApiResponse<String> cancelTicket(@PathVariable("id") int id) {
         ApiResponse<String> apiResponse = new ApiResponse<>();
         try {
             ticketService.cancelTicket(id);
