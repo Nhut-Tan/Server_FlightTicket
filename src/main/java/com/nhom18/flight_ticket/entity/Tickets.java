@@ -6,7 +6,6 @@ import com.nhom18.flight_ticket.core.TicketStatus;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 

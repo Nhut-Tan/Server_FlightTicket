@@ -1,6 +1,6 @@
 package com.nhom18.flight_ticket.dto.request;
 
-import com.nhom18.flight_ticket.core.TicketStatus;
+
 
 import java.math.BigDecimal;
 

@@ -3,6 +3,7 @@ package com.nhom18.flight_ticket.controller;
 import com.nhom18.flight_ticket.dto.request.ApiResponse;
 import com.nhom18.flight_ticket.dto.request.TicketCreationRequest;
 import com.nhom18.flight_ticket.dto.request.TicketUpdateRequest;
+import com.nhom18.flight_ticket.dto.response.TicketHistoryResponse;
 import com.nhom18.flight_ticket.entity.Tickets;
 import com.nhom18.flight_ticket.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,26 @@ public class TicketController {
         } catch (Exception e) {
             apiResponse.setCode(500);
             apiResponse.setMessage("Error booking ticket: " + e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    @GetMapping("/historyTicket/{account_id}")
+    public ApiResponse<List<TicketHistoryResponse>> getTicketHistory(@PathVariable("account_id") int accountId) {
+        ApiResponse<List<TicketHistoryResponse>> apiResponse = new ApiResponse<>();
+        try {
+            List<TicketHistoryResponse> history = ticketService.getTicketHistoryByAccountId(accountId);
+            if (!history.isEmpty() ) {
+                apiResponse.setResult(history);
+                apiResponse.setCode(200);
+                apiResponse.setMessage("Lịch sử vé đã đặt");
+            } else {
+                apiResponse.setCode(200);
+                apiResponse.setMessage("Bạn chưa đặt vé nào");
+            }
+        } catch (Exception e) {
+            apiResponse.setCode(500);
+            apiResponse.setMessage("Không tồn tại vé" + e.getMessage());
         }
         return apiResponse;
     }

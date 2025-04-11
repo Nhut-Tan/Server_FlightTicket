@@ -4,6 +4,7 @@ import com.nhom18.flight_ticket.core.FlightStatus;
 import com.nhom18.flight_ticket.core.TicketStatus;
 import com.nhom18.flight_ticket.dto.request.TicketCreationRequest;
 import com.nhom18.flight_ticket.dto.request.TicketUpdateRequest;
+import com.nhom18.flight_ticket.dto.response.TicketHistoryResponse;
 import com.nhom18.flight_ticket.entity.*;
 import com.nhom18.flight_ticket.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-
 
 @Service
 public class TicketService {
@@ -25,19 +25,20 @@ public class TicketService {
     private FlightclassRepository flightclassRepository;
     @Autowired
     private FlightService flightService;
-    public List<Tickets> getAllTickets(){
+
+    public List<Tickets> getAllTickets() {
         return ticketRepository.findAll();
     }
 
-    public Tickets getById(int id){
+    public Tickets getById(int id) {
         return ticketRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ticket not found with ID: " + id));
     }
 
-    public Tickets updateStatusTicket(int id, TicketUpdateRequest request){
+    public Tickets updateStatusTicket(int id, TicketUpdateRequest request) {
         Tickets ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ticket not found with ID: " + id));
-        if(request.getStatus() != null) {
+        if (request.getStatus() != null) {
             ticket.setStatus(request.getStatus());
             return ticketRepository.save(ticket);
         }
@@ -52,7 +53,7 @@ public class TicketService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Flight Id"));
         Flightclasses flightclass = flightclassRepository.findById(request.getClass_id())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Account Id"));
-        if(flight.getStatus() == FlightStatus.SCHEDULED){
+        if (flight.getStatus() == FlightStatus.SCHEDULED) {
             flight = flightService.updateDecreaseSeat(flight);
             ticket.setAccount(account);
             ticket.setFlightclass(flightclass);
@@ -67,13 +68,17 @@ public class TicketService {
         return null;
     }
 
-    public void cancelTicket(int id){
+    public void cancelTicket(int id) {
         Tickets ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Ticket Id" + id));
-        if(ticket.getStatus() != TicketStatus.CANCELLED){
+        if (ticket.getStatus() != TicketStatus.CANCELLED) {
             flightService.updateIncreaseSeat(ticket.getFlight());
             ticket.setStatus(TicketStatus.CANCELLED);
             ticketRepository.save(ticket);
         }
+    }
+
+    public List<TicketHistoryResponse> getTicketHistoryByAccountId(int accountId) {
+        return ticketRepository.getTicketHistory(accountId);
     }
 }

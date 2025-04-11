@@ -4,7 +4,6 @@ import com.nhom18.flight_ticket.dto.request.ApiResponse;
 import com.nhom18.flight_ticket.dto.request.FlightCreationRequest;
 import com.nhom18.flight_ticket.dto.request.FlightUpdateRequest;
 import com.nhom18.flight_ticket.dto.response.FlightSearchResponse;
-import com.nhom18.flight_ticket.entity.Accounts;
 import com.nhom18.flight_ticket.entity.Flights;
 import com.nhom18.flight_ticket.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
