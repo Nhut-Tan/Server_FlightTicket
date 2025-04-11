@@ -3,9 +3,11 @@ package com.nhom18.flight_ticket.service;
 import com.nhom18.flight_ticket.core.Role;
 import com.nhom18.flight_ticket.dto.request.AccountCreationRequest;
 import com.nhom18.flight_ticket.dto.request.AccountUpdateRequest;
+import com.nhom18.flight_ticket.dto.response.LoginResponse;
 import com.nhom18.flight_ticket.entity.Accounts;
 import com.nhom18.flight_ticket.repository.AccountRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +35,34 @@ public class AccountService {
                 .orElseThrow(() -> new IllegalArgumentException("Account not found with ID: " + id));
     }
 
-    public Boolean loginAccount(AccountCreationRequest request) {
-        Optional<Accounts> accountOpt = accountRepository.findByEmail(request.getEmail());
+    // public Boolean loginAccount(AccountCreationRequest request) {
+    // Optional<Accounts> accountOpt =
+    // accountRepository.findByEmail(request.getEmail());
 
+    // if (accountOpt.isPresent()) {
+    // Accounts account = accountOpt.get();
+    // if (passwordEncoder.matches(request.getPassword_hash(),
+    // account.getPassword_hash())) {
+
+    // return true; // Đăng nhập thành công
+    // }
+    // }
+    // return false; // Sai email hoặc mật khẩu
+    // }
+    public LoginResponse login(AccountCreationRequest request, HttpSession session) {
+        Optional<Accounts> accountOpt = accountRepository.findByEmail(request.getEmail());
         if (accountOpt.isPresent()) {
             Accounts account = accountOpt.get();
-            if (passwordEncoder.matches(request.getPassword_hash(), account.getPassword_hash())) {
 
-                return true; // Đăng nhập thành công
+            if (passwordEncoder.matches(request.getPassword_hash(), account.getPassword_hash())) {
+                // Lưu vào session
+                session.setAttribute("account_id", account.getAccount_id());
+                session.setAttribute("role", account.getRole());
+                // Trả về id và role
+                return new LoginResponse(account.getAccount_id(), account.getRole());
             }
         }
-        return false; // Sai email hoặc mật khẩu
+        return null; // đăng nhập thất bại
     }
 
     @Transactional

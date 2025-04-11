@@ -15,7 +15,7 @@ public class Flights {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int flight_id;
     @Column(name = "flight_number", unique = true)
-    private int flight_number;
+    private String flight_number;
     private Timestamp departure_time;
 
     private Timestamp arrival_time;
@@ -135,11 +135,11 @@ public class Flights {
         this.des_airport = des_airport;
     }
 
-    public int getFlight_number() {
+    public String getFlight_number() {
         return flight_number;
     }
 
-    public void setFlight_number(int flight_number) {
+    public void setFlight_number(String flight_number) {
         this.flight_number = flight_number;
     }
 }

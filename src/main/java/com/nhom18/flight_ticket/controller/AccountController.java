@@ -3,10 +3,11 @@ package com.nhom18.flight_ticket.controller;
 import com.nhom18.flight_ticket.dto.request.AccountCreationRequest;
 import com.nhom18.flight_ticket.dto.request.AccountUpdateRequest;
 import com.nhom18.flight_ticket.dto.request.ApiResponse;
+import com.nhom18.flight_ticket.dto.response.LoginResponse;
 import com.nhom18.flight_ticket.entity.Accounts;
 import com.nhom18.flight_ticket.service.AccountService;
 
-
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,16 +52,22 @@ public class AccountController {
         return apiResponse;
     }
 
-    @PostMapping("/user/login")
-    public ResponseEntity<ApiResponse<String>> loginAccount(@RequestBody AccountCreationRequest request) {
-        ApiResponse<String> apiResponse = new ApiResponse<>();
-        if (accountService.loginAccount(request)) {
+    @PostMapping("user/login")
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody AccountCreationRequest request,
+            HttpSession session) {
+        LoginResponse response = accountService.login(request, session);
+
+        ApiResponse<LoginResponse> apiResponse = new ApiResponse<>();
+
+        if (response != null) {
             apiResponse.setCode(200);
-            apiResponse.setMessage("Login Successful");
+            apiResponse.setMessage("Đăng nhập thành công");
+            apiResponse.setResult(response);
             return ResponseEntity.ok(apiResponse);
         } else {
             apiResponse.setCode(401);
-            apiResponse.setMessage("Invalid email or password");
+            apiResponse.setMessage("Email hoặc mật khẩu không đúng");
+            apiResponse.setResult(null);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiResponse);
         }
     }

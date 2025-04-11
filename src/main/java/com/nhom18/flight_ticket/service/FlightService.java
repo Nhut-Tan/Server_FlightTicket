@@ -104,6 +104,10 @@ public class FlightService {
         return results;
     }
 
+    public List<Flights> getAllFlights() {
+        return flightRepository.findAll();
+    }
+
     public Flights createFlight(FlightCreationRequest request) {
         Flights flight = new Flights();
         Airlines airline = airlineRepository.findById(request.getAirline_id())
@@ -118,10 +122,10 @@ public class FlightService {
         flight.setDes_airport(desAirport);
         flight.setArrival_time(request.getArrival_time());
         flight.setDeparture_time(request.getDeparture_time());
-        flight.setTotal_seats(request.getTotal_seats());
-        flight.setAvailable_seats(request.getAvailable_seats());
+        flight.setTotal_seats(80);
+        flight.setAvailable_seats(80);
         flight.setPrice(request.getPrice());
-        flight.setStatus(request.getStatus());
+        flight.setStatus(FlightStatus.SCHEDULED);
         flightRepository.save(flight);
         return flight;
     }

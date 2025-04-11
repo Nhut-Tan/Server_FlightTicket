@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 public class FlightCreationRequest {
     private int airline_id;
-    private int flight_number;
+    private String flight_number;
     private int origin_airport;
     private int des_airport;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -28,11 +28,11 @@ public class FlightCreationRequest {
         this.airline_id = airline_id;
     }
 
-    public int getFlight_number() {
+    public String getFlight_number() {
         return flight_number;
     }
 
-    public void setFlight_number(int flight_number) {
+    public void setFlight_number(String flight_number) {
         this.flight_number = flight_number;
     }
 

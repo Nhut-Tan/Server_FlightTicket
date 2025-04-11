@@ -4,6 +4,7 @@ import com.nhom18.flight_ticket.dto.request.ApiResponse;
 import com.nhom18.flight_ticket.dto.request.FlightCreationRequest;
 import com.nhom18.flight_ticket.dto.request.FlightUpdateRequest;
 import com.nhom18.flight_ticket.dto.response.FlightSearchResponse;
+import com.nhom18.flight_ticket.entity.Accounts;
 import com.nhom18.flight_ticket.entity.Flights;
 import com.nhom18.flight_ticket.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,21 @@ public class FlightController {
         List<FlightSearchResponse> flights = flightService.searchFlights(departureId, arrivalId, outboundDate,
                 returnDate);
         return ResponseEntity.ok(flights);
+    }
+
+    @GetMapping("/flights")
+    public ApiResponse<List<Flights>> getAllFlight() {
+        ApiResponse<List<Flights>> apiResponse = new ApiResponse<>();
+        try {
+            List<Flights> list = flightService.getAllFlights();
+            apiResponse.setResult(list);
+            apiResponse.setCode(200);
+            apiResponse.setMessage("Get Success");
+        } catch (Exception e) {
+            apiResponse.setCode(500);
+            apiResponse.setMessage("Error retrieving list flights: " + e.getMessage());
+        }
+        return apiResponse;
     }
 
     @PostMapping("/flight")
