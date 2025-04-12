@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhom18.flight_ticket.core.FlightStatus;
 import com.nhom18.flight_ticket.dto.request.FlightCreationRequest;
 import com.nhom18.flight_ticket.dto.request.FlightUpdateRequest;
+import com.nhom18.flight_ticket.dto.response.FlightInfoResponse;
 import com.nhom18.flight_ticket.dto.response.FlightSearchResponse;
 import com.nhom18.flight_ticket.entity.Airlines;
 import com.nhom18.flight_ticket.entity.Airports;
@@ -104,8 +105,8 @@ public class FlightService {
         return results;
     }
 
-    public List<Flights> getAllFlights() {
-        return flightRepository.findAll();
+    public List<FlightInfoResponse> getAllFlights() {
+        return flightRepository.getAllFlightInfo();
     }
 
     public Flights createFlight(FlightCreationRequest request) {
@@ -114,7 +115,7 @@ public class FlightService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Airline Id"));
         Airports originAirport = airportRepository.findById(request.getOrigin_airport())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Origin AirPort Id"));
-        Airports desAirport = airportRepository.findById(request.getOrigin_airport())
+        Airports desAirport = airportRepository.findById(request.getDes_airport())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Des Airport Id"));
         flight.setAirline(airline);
         flight.setFlight_number(request.getFlight_number());

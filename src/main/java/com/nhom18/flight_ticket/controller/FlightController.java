@@ -3,6 +3,7 @@ package com.nhom18.flight_ticket.controller;
 import com.nhom18.flight_ticket.dto.request.ApiResponse;
 import com.nhom18.flight_ticket.dto.request.FlightCreationRequest;
 import com.nhom18.flight_ticket.dto.request.FlightUpdateRequest;
+import com.nhom18.flight_ticket.dto.response.FlightInfoResponse;
 import com.nhom18.flight_ticket.dto.response.FlightSearchResponse;
 import com.nhom18.flight_ticket.entity.Flights;
 import com.nhom18.flight_ticket.service.FlightService;
@@ -33,10 +34,10 @@ public class FlightController {
     }
 
     @GetMapping("/flights")
-    public ApiResponse<List<Flights>> getAllFlight() {
-        ApiResponse<List<Flights>> apiResponse = new ApiResponse<>();
+    public ApiResponse<List<FlightInfoResponse>> getAllFlight() {
+        ApiResponse<List<FlightInfoResponse>> apiResponse = new ApiResponse<>();
         try {
-            List<Flights> list = flightService.getAllFlights();
+            List<FlightInfoResponse> list = flightService.getAllFlights();
             apiResponse.setResult(list);
             apiResponse.setCode(200);
             apiResponse.setMessage("Get Success");
