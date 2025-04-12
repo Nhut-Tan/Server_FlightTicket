@@ -4,29 +4,29 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import com.nhom18.flight_ticket.core.FlightStatus;
-import com.nhom18.flight_ticket.entity.Airports;
+
 
 public class FlightInfoResponse {
     private int flight_id;
-    private String flightNumber;
+    private String flight_number;
     private int origin_airport;
     private int des_airport;
-    private Timestamp departureTime;
-    private Timestamp arrivalTime;
+    private Timestamp departure_time;
+    private Timestamp arrival_time;
     private int total_seats;
     private int available_seats;
     private BigDecimal price;
     private FlightStatus status;
 
-    public FlightInfoResponse(int flight_id, String flightNumber, int origin_airport, int des_airport,
-            Timestamp departureTime, Timestamp arrivalTime, int total_seats, int available_seats, BigDecimal price,
+    public FlightInfoResponse(int flight_id, String flight_number, int origin_airport, int des_airport,
+            Timestamp departure_time, Timestamp arrival_time, int total_seats, int available_seats, BigDecimal price,
             FlightStatus status) {
         this.flight_id = flight_id;
-        this.flightNumber = flightNumber;
+        this.flight_number = flight_number;
         this.origin_airport = origin_airport;
         this.des_airport = des_airport;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
+        this.departure_time = departure_time;
+        this.arrival_time = arrival_time;
         this.total_seats = total_seats;
         this.available_seats = available_seats;
         this.price = price;
@@ -41,44 +41,44 @@ public class FlightInfoResponse {
         this.flight_id = flight_id;
     }
 
-    public String getFlightNumber() {
-        return flightNumber;
+    public String getFlight_number() {
+        return flight_number;
     }
 
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
+    public void setFlight_number(String flight_number) {
+        this.flight_number = flight_number;
     }
 
-    public int getOriginAirport() {
+    public int getOrigin_airport() {
         return origin_airport;
     }
 
-    public void setOriginAirport(int origin_airport) {
+    public void setOrigin_airport(int origin_airport) {
         this.origin_airport = origin_airport;
     }
 
-    public int getDestinationAirport() {
+    public int getDes_airport() {
         return des_airport;
     }
 
-    public void setDestinationAirport(int des_airport) {
+    public void setDes_airport(int des_airport) {
         this.des_airport = des_airport;
     }
 
-    public Timestamp getDepartureTime() {
-        return departureTime;
+    public Timestamp getDeparture_time() {
+        return departure_time;
     }
 
-    public void setDepartureTime(Timestamp departureTime) {
-        this.departureTime = departureTime;
+    public void setDeparture_time(Timestamp departure_time) {
+        this.departure_time = departure_time;
     }
 
-    public Timestamp getArrivalTime() {
-        return arrivalTime;
+    public Timestamp getArrival_time() {
+        return arrival_time;
     }
 
-    public void setArrivalTime(Timestamp arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setArrival_time(Timestamp arrival_time) {
+        this.arrival_time = arrival_time;
     }
 
     public int getTotal_seats() {
@@ -113,4 +113,5 @@ public class FlightInfoResponse {
         this.status = status;
     }
 
+   
 }
