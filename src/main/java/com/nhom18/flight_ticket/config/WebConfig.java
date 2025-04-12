@@ -12,7 +12,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         // Cho phép frontend từ localhost:8081
         registry.addMapping("/api/**") // Định nghĩa các URL cần cấu hình CORS
-                .allowedOrigins("http://localhost:8081", "https://datvemaybay2025.netlify.app")
+                .allowedOrigins("http://localhost:8081", 
+                        "https://datvemaybay2025.netlify.app",
+                        "https://flyeasyticketsvn.netlify.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Các phương thức HTTP được phép
                 .allowedHeaders("*") // Cho phép tất cả các header
                 .allowCredentials(true); // Cho phép gửi cookie hoặc thông tin xác thực
