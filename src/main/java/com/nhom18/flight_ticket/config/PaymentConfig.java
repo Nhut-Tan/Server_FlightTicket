@@ -1,7 +1,7 @@
 package com.nhom18.flight_ticket.config;
 
 import jakarta.servlet.http.HttpServletRequest;
-
+import io.github.cdimascio.dotenv.Dotenv;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -11,10 +11,12 @@ public class PaymentConfig {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "https://server-flightticket.onrender.com/api/vnpay-payment-return";
     public static String vnp_TmnCode = "F6JRUKBK";
-    public static String secretKey = "Z148AC2ELSLJWALHE3FF1GEKBKFCHUYR";
+    // public static String secretKey = "Z148AC2ELSLJWALHE3FF1GEKBKFCHUYR";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
+    public static Dotenv dotenv = Dotenv.load();
 
     public static String hashAllFields(Map fields) {
+
         List fieldNames = new ArrayList(fields.keySet());
         Collections.sort(fieldNames);
         StringBuilder sb = new StringBuilder();
@@ -31,7 +33,7 @@ public class PaymentConfig {
                 sb.append("&");
             }
         }
-        return hmacSHA512(secretKey,sb.toString());
+        return hmacSHA512(dotenv.get("VNPAY_KEY"), sb.toString());
     }
 
     public static String hmacSHA512(final String key, final String data) {

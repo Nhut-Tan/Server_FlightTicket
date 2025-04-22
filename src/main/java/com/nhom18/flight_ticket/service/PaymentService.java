@@ -10,6 +10,7 @@ import com.nhom18.flight_ticket.entity.Tickets;
 import com.nhom18.flight_ticket.repository.AccountRepository;
 import com.nhom18.flight_ticket.repository.PaymentRepository;
 import com.nhom18.flight_ticket.repository.TicketRepository;
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,8 @@ public class PaymentService {
     AccountRepository accountRepository;
     @Autowired
     TicketRepository ticketRepository;
-    public String createOrder(HttpServletRequest request){
+
+    public String createOrder(HttpServletRequest request) {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
@@ -43,7 +45,7 @@ public class PaymentService {
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(amount*100));
+        vnp_Params.put("vnp_Amount", String.valueOf(amount * 100));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang" + vnp_TxnRef);
@@ -71,12 +73,12 @@ public class PaymentService {
             String fieldName = (String) itr.next();
             String fieldValue = (String) vnp_Params.get(fieldName);
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                //Build hash data
+                // Build hash data
                 hashData.append(fieldName);
                 hashData.append('=');
                 try {
                     hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                    //Build query
+                    // Build query
                     query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                     query.append('=');
                     query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
@@ -89,14 +91,15 @@ public class PaymentService {
                 }
             }
         }
+        Dotenv dotenv = Dotenv.load();
         String queryUrl = query.toString();
-        String vnp_SecureHash = PaymentConfig.hmacSHA512(PaymentConfig.secretKey, hashData.toString());
+        String vnp_SecureHash = PaymentConfig.hmacSHA512(dotenv.get("VNPAY_KEY"), hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = PaymentConfig.vnp_PayUrl + "?" + queryUrl;
         return paymentUrl;
     }
 
-    public int orderReturn(HttpServletRequest request){
+    public int orderReturn(HttpServletRequest request) {
         Map fields = new HashMap();
         for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
             String fieldName = null;
@@ -130,7 +133,8 @@ public class PaymentService {
             return -1;
         }
     }
-    public Payments createPayment(PaymentCreationRequest request){
+
+    public Payments createPayment(PaymentCreationRequest request) {
         Payments payments = new Payments();
         Accounts account = accountRepository.findById(request.getUser_id())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Account Id"));

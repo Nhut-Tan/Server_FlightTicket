@@ -13,10 +13,11 @@ import com.nhom18.flight_ticket.entity.Flights;
 import com.nhom18.flight_ticket.repository.AirlineRepository;
 import com.nhom18.flight_ticket.repository.AirportRepository;
 import com.nhom18.flight_ticket.repository.FlightRepository;
-
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,10 @@ public class FlightService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
-    private static final String SERPAPI_KEY = "0af9d871d47dd3c85ab8a5f44b4bd1f539ca1180962168a5150eef13465fa050";
+    // private static final String SERPAPI_KEY =
+    // "0af9d871d47dd3c85ab8a5f44b4bd1f539ca1180962168a5150eef13465fa050";
     private static final String SERPAPI_URL = "https://serpapi.com/search.json";
-
+    Dotenv dotenv = Dotenv.load();
     public FlightService(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
@@ -48,14 +50,13 @@ public class FlightService {
         try {
             // Xác định loại chuyến bay
             String type = (returnDate != null && !returnDate.isEmpty()) ? "1" : "2";
-
             String apiUrl = SERPAPI_URL + "?engine=google_flights"
                     + "&departure_id=" + departureId
                     + "&arrival_id=" + arrivalId
                     + "&outbound_date=" + outboundDate
                     + (returnDate != null && !returnDate.isEmpty() ? "&return_date=" + returnDate : "")
                     + "&type=" + type
-                    + "&api_key=" + SERPAPI_KEY;
+                    + "&api_key=" + dotenv.get("SERPAPI_KEY");
 
             // Gửi request đến SerpAPI
             ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
@@ -101,6 +102,8 @@ public class FlightService {
             e.printStackTrace();
         }
 
+        // results.sort(Comparator.comparingDouble(FlightSearchResponse::getPrice));
+        // return results.stream().limit(2).collect(Collectors.toList());
         return results;
     }
 

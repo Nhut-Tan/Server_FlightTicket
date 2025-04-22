@@ -55,7 +55,6 @@ public class AccountService {
             Accounts account = accountOpt.get();
 
             if (passwordEncoder.matches(request.getPassword_hash(), account.getPassword_hash())) {
-                // Lưu vào session
                 session.setAttribute("account_id", account.getAccount_id());
                 session.setAttribute("role", account.getRole());
                 // Trả về id và role
@@ -76,7 +75,7 @@ public class AccountService {
             newAccount.setEmail(request.getEmail());
             newAccount.setPhone_number(request.getPhone_number());
             newAccount.setName(request.getName());
-            newAccount.setPassword_hash(passwordEncoder.encode(request.getPassword_hash())); // Mã hóa mật khẩu
+            newAccount.setPassword_hash(passwordEncoder.encode(request.getPassword_hash()));
             newAccount.setRole(Role.CUSTOMER);
             newAccount.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
             return accountRepository.save(newAccount);
@@ -86,7 +85,7 @@ public class AccountService {
             newAccount.setEmail(request.getEmail());
             newAccount.setPhone_number(request.getPhone_number());
             newAccount.setName(request.getName());
-            newAccount.setPassword_hash(passwordEncoder.encode(request.getPassword_hash())); // Mã hóa mật khẩu
+            newAccount.setPassword_hash(passwordEncoder.encode(request.getPassword_hash()));
             newAccount.setRole(Role.ADMIN);
             newAccount.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
             return accountRepository.save(newAccount);
