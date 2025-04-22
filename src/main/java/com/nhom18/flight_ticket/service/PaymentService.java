@@ -91,9 +91,9 @@ public class PaymentService {
                 }
             }
         }
-        Dotenv dotenv = Dotenv.load();
+        // Dotenv dotenv = Dotenv.load();
         String queryUrl = query.toString();
-        String vnp_SecureHash = PaymentConfig.hmacSHA512(dotenv.get("VNPAY_KEY"), hashData.toString());
+        String vnp_SecureHash = PaymentConfig.hmacSHA512(System.getenv("VNPAY_KEY"), hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = PaymentConfig.vnp_PayUrl + "?" + queryUrl;
         return paymentUrl;

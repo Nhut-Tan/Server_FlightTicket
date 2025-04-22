@@ -13,7 +13,7 @@ public class PaymentConfig {
     public static String vnp_TmnCode = "F6JRUKBK";
     // public static String secretKey = "Z148AC2ELSLJWALHE3FF1GEKBKFCHUYR";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
-    public static Dotenv dotenv = Dotenv.load();
+    // public static Dotenv dotenv = Dotenv.load();
 
     public static String hashAllFields(Map fields) {
 
@@ -33,7 +33,7 @@ public class PaymentConfig {
                 sb.append("&");
             }
         }
-        return hmacSHA512(dotenv.get("VNPAY_KEY"), sb.toString());
+        return hmacSHA512(System.getenv("VNPAY_KEY"), sb.toString());
     }
 
     public static String hmacSHA512(final String key, final String data) {

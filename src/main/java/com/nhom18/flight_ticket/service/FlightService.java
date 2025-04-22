@@ -37,7 +37,7 @@ public class FlightService {
     // private static final String SERPAPI_KEY =
     // "0af9d871d47dd3c85ab8a5f44b4bd1f539ca1180962168a5150eef13465fa050";
     private static final String SERPAPI_URL = "https://serpapi.com/search.json";
-    Dotenv dotenv = Dotenv.load();
+
     public FlightService(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
@@ -46,7 +46,7 @@ public class FlightService {
     public List<FlightSearchResponse> searchFlights(String departureId, String arrivalId, String outboundDate,
             String returnDate) {
         List<FlightSearchResponse> results = new ArrayList<>();
-
+        //Dotenv dotenv = Dotenv.load();
         try {
             // Xác định loại chuyến bay
             String type = (returnDate != null && !returnDate.isEmpty()) ? "1" : "2";
@@ -56,7 +56,7 @@ public class FlightService {
                     + "&outbound_date=" + outboundDate
                     + (returnDate != null && !returnDate.isEmpty() ? "&return_date=" + returnDate : "")
                     + "&type=" + type
-                    + "&api_key=" + dotenv.get("SERPAPI_KEY");
+                    + "&api_key=" + System.getenv("SERPAPI_KEY");
 
             // Gửi request đến SerpAPI
             ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
