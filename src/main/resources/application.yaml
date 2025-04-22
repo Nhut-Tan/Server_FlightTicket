@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://root:gYuMCAyeToCxfNZMhqJbFtFDbRvPNXJm@interchange.proxy.rlwy.net:21793/railway
+    url: jdbc:mysql://root:IRmjeoYoKodOIhCgfoBZevyMwCsHzXhr@trolley.proxy.rlwy.net:36393/railway
     username: root
-    password: gYuMCAyeToCxfNZMhqJbFtFDbRvPNXJm
+    password: IRmjeoYoKodOIhCgfoBZevyMwCsHzXhr
     # url: "jdbc:mysql://localhost:3306/flight_ticket"
     # username: root
     # password:

@@ -49,7 +49,6 @@ public class FlightService {
             // Xác định loại chuyến bay
             String type = (returnDate != null && !returnDate.isEmpty()) ? "1" : "2";
 
-            // ✅ Tạo URL với type chính xác
             String apiUrl = SERPAPI_URL + "?engine=google_flights"
                     + "&departure_id=" + departureId
                     + "&arrival_id=" + arrivalId
@@ -58,14 +57,14 @@ public class FlightService {
                     + "&type=" + type
                     + "&api_key=" + SERPAPI_KEY;
 
-            // ✅ Gửi request đến SerpAPI
+            // Gửi request đến SerpAPI
             ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
             String jsonResponse = response.getBody();
 
-            // 🟢 In JSON gốc để kiểm tra phản hồi API
-            System.out.println("JSON Response: " + jsonResponse);
+            // In JSON gốc để kiểm tra phản hồi API
+            // System.out.println("JSON Response: " + jsonResponse);
 
-            // ✅ Xử lý JSON response
+            // Xử lý JSON response
             JsonNode rootNode = objectMapper.readTree(jsonResponse);
             JsonNode bestFlightsNode = rootNode.path("best_flights");
 

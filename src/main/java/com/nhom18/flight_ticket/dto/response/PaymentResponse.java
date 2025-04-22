@@ -1,4 +1,4 @@
-package com.nhom18.flight_ticket.dto.request;
+package com.nhom18.flight_ticket.dto.response;
 
 import com.nhom18.flight_ticket.core.PaymentMethod;
 import com.nhom18.flight_ticket.core.PaymentStatus;
@@ -6,7 +6,7 @@ import com.nhom18.flight_ticket.core.PaymentStatus;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class PaymentCreationRequest {
+public class PaymentResponse {
     private int ticket_id;
     private int user_id;
     private BigDecimal amount;
